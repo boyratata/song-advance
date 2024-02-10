@@ -8,7 +8,8 @@ The Song Player application is a Python program designed to play a collection of
 - **Volume Control:** Users can adjust the volume using a slider control.
 - **Owner Information:** Displays information about the owner, including an image and name.
 
-- <blockquote class="imgur-embed-pub" lang="en" data-id="a/SFejmd3"><a href="//imgur.com/SFejmd3"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+- ![gui](https://i.imgur.com/IC8xRfB.gif)
+
 
 ## How to Use:
 1. Launch the application.
