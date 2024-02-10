@@ -4,13 +4,13 @@ The Song Player application is a Python program designed to play a collection of
 
 ## Features:
 - **User Interface:** The application offers an intuitive interface for selecting and playing songs.
-- **Song List:** It fetches songs from predefined URLs and populates a list for users to choose from.
+- **Song List:** It fetches songs from predefined URLs and populates a list for users.
 - **Volume Control:** Users can adjust the volume using a slider control.
 - **Owner Information:** Displays information about the owner, including an image and name.
 
 ## How to Use:
 1. Launch the application.
-2. Browse the available songs in the list.
+2. wait for the application to start.
 3. Click on a song to start playback.
 4. Use the volume slider to adjust the audio level.
 
