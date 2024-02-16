@@ -26,3 +26,6 @@ The Song Player application is a Python program designed to play a collection of
 ## Notes:
 - Ensure a stable internet connection for fetching songs from the provided URLs.
 - Make sure the necessary libraries are installed (PySide2, pygame, requests) for proper functionality.
+
+## contact
+- discordapp.com/user/962552468292648990
