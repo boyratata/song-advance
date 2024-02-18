@@ -12,7 +12,7 @@ The Song Player application is a Python program designed to play a collection of
 
 
 ## How to Use:
-1.turn off antivirus so it dont flag it(it's a false positive).
+ 1.turn off antivirus so it dont flag it(it's a false positive).
 
 2. Launch the application.
 3. wait for the application to start.
