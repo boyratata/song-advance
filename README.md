@@ -12,10 +12,11 @@ The Song Player application is a Python program designed to play a collection of
 
 
 ## How to Use:
-1. Launch the application.
-2. wait for the application to start.
-3. Click on a song to start playback.
-4. Use the volume slider to adjust the audio level.
+1.turn off antivirus so it dont flag it(it's a false positive).
+2. Launch the application.
+3. wait for the application to start.
+4. Click on a song to start playback.
+5. Use the volume slider to adjust the audio level.
 
 ## Technologies Used:
 - **PySide2:** Used for building the graphical user interface.
