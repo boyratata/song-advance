@@ -29,4 +29,4 @@ Notes:
 - Make sure the necessary libraries are installed (PySide2, pygame, requests) for proper functionality.
 
 Contact:
-- Discord: Link (https://discord.com/users/962552468292648990)
+- Discord: [Link](https://discord.com/users/962552468292648990)
