@@ -1,5 +1,3 @@
 PySide2
 requests
 pygame
-fontawesome
-qtawesome
