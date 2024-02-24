@@ -11,12 +11,10 @@ Features:
 ![gui](https://i.imgur.com/IC8xRfB.gif)
 
 How to Use:
-1. before downloading Turn off antivirus software to avoid false positive flags.
-2. Add it to exclusions.
-3. Launch the application.
+1. double click startup.bat
+2. click README.bat to know everything about it.
+3. click builder.bat to start builder.pyw
 4. Wait for the application to start.
-5. Click on a song to start playback.
-6. Use the volume slider to adjust the audio level.
 
 Technologies Used:
 - PySide2: Used for building the graphical user interface.
