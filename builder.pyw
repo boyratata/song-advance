@@ -2,6 +2,7 @@ from PySide2 import QtWidgets, QtGui, QtCore
 import sys
 import requests
 import pygame
+import os
 from io import BytesIO
 from zipfile import ZipFile
 
@@ -10,6 +11,7 @@ class SongPlayer(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("Song Player")
         self.setGeometry(100, 100, 800, 500)
+        self.current_song_playing = False
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setStyleSheet("background-color: #263238; color: #FFFFFF; font-size: 14px; border-radius: 10px;")
 
@@ -87,6 +89,7 @@ class SongPlayer(QtWidgets.QWidget):
             "https://github.com/boyratata/song-list/raw/main/yaa.zip",
             "https://github.com/boyratata/song-list/raw/main/upload.zip"
         ]
+        song_count = 0
         for url in urls:
             try:
                 response = requests.get(url)
@@ -94,33 +97,39 @@ class SongPlayer(QtWidgets.QWidget):
                     with ZipFile(BytesIO(response.content)) as z:
                         for filename in z.namelist():
                             if filename.endswith('.mp3'):
-                                song_name = filename.split('/')[-1].split('.')[0]
+                                song_name = filename.split('.')[0]
                                 song_data = z.read(filename)
                                 self.song_dict[song_name] = song_data
-                                self.song_list.addItem(song_name)
-                else:
-                    print(f"Failed to fetch songs from {url}.")
+                                song_count += 1
+                                self.song_list.addItem(f"{song_count}. {song_name}")
             except Exception as e:
                 print(f"Error fetching songs: {e}")
 
     def toggle_play_pause(self, item):
-        song_name = item.text()
+        full_song_name = item.text()
+        song_name = full_song_name.split('. ', 1)[-1]
         song_data = self.song_dict.get(song_name)
+
         if song_data:
             if song_name == self.current_song:
-                if pygame.mixer.music.get_busy():
+                if self.current_song_playing:
+                    self.current_song_playing = False
                     pygame.mixer.music.pause()
                 else:
+                    self.current_song_playing = True
                     pygame.mixer.music.unpause()
             else:
-                pygame.mixer.music.stop()
-                pygame.mixer.music.load(BytesIO(song_data))
+                if self.current_song_playing:
+                    pygame.mixer.music.stop()
+                self.current_song_playing = True
+                song_data_io = BytesIO(song_data)
+                pygame.mixer.music.load(song_data_io)
                 pygame.mixer.music.set_volume(self.volume_slider.value() / 100)
                 pygame.mixer.music.play(-1)
                 self.current_song = song_name
                 QtCore.QTimer.singleShot(100, self.check_song_finished)
         else:
-            print(f"Failed to play song: {song_name}")
+            print(f"Failed to play song: {full_song_name}")
 
     def change_volume(self, value):
         volume = value / 200 
