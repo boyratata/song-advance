@@ -3,6 +3,7 @@ import sys
 import requests
 import pygame
 import os
+import shutil
 from io import BytesIO
 from zipfile import ZipFile
 
@@ -142,7 +143,6 @@ class SongPlayer(QtWidgets.QWidget):
         if not pygame.mixer.music.get_busy():
             self.current_song = None
 
-
 class TitleBar(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -166,6 +166,18 @@ class TitleBar(QtWidgets.QWidget):
         self.title_label.setStyleSheet("color: white; font-size: 16px; font-weight: bold;")
         layout.addWidget(self.title_label)
         layout.addStretch()
+
+        self.upload_button = QtWidgets.QPushButton("+")
+        self.upload_button.clicked.connect(self.upload_mp3)
+        self.upload_button.setStyleSheet("color: white; font-weight: bold; background-color: #455A64;")
+        self.upload_button.setFixedSize(20, 20)
+        layout.addWidget(self.upload_button)
+
+        self.search_button = QtWidgets.QPushButton("🔍")
+        self.search_button.clicked.connect(self.toggle_search_bar)
+        self.search_button.setStyleSheet("color: white; font-weight: bold; background-color: #455A64;")
+        self.search_button.setFixedSize(20, 20)
+        layout.addWidget(self.search_button)
 
         self.minimize_button = QtWidgets.QPushButton("━")
         self.minimize_button.clicked.connect(self.minimize_window)
@@ -206,6 +218,15 @@ class TitleBar(QtWidgets.QWidget):
             self.parent().showMaximized()
             self.maximize_button.setText("❐")
 
+    def upload_mp3(self):
+        file_dialog = QtWidgets.QFileDialog(self)
+        file_dialog.setNameFilter("Music Files (*.mp3)")
+        file_dialog.setViewMode(QtWidgets.QFileDialog.Detail)
+        if file_dialog.exec_():
+            selected_files = file_dialog.selectedFiles()
+            for file_path in selected_files:
+                self.handle_uploaded_file(file_path)
+
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.mouse_pressed = True
@@ -221,6 +242,59 @@ class TitleBar(QtWidgets.QWidget):
         if event.button() == QtCore.Qt.LeftButton:
             self.mouse_pressed = False
             event.accept()
+
+    def handle_uploaded_file(self, file_path):
+        if file_path.endswith('.mp3'):
+            upload_dir = 'uploaded_songs'
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
+
+            file_name = os.path.basename(file_path)
+            destination_path = os.path.join(upload_dir, file_name)
+
+            try:
+                shutil.copyfile(file_path, destination_path)
+                
+                song_name = file_name.split('.')[0]
+                with open(destination_path, 'rb') as song_file:
+                    song_data = song_file.read()
+
+                    self.parent().song_dict[song_name] = song_data
+
+                    self.parent().song_list.addItem(f"{len(self.parent().song_dict)}. {song_name}")
+
+                print(f"Uploaded song '{song_name}' saved successfully.")
+            except Exception as e:
+                print(f"Error handling uploaded file: {e}")
+        else:
+            print("Unsupported file format. Only MP3 files are allowed.")
+
+    def toggle_search_bar(self):
+        if not hasattr(self, 'search_bar'):  # Check if search bar exists
+            self.search_bar = QtWidgets.QLineEdit()
+            self.search_bar.setPlaceholderText("Search Songs")
+            search_bar_style = """
+                background: #263238;
+                border-radius: 10px;
+                color: white;
+                padding: 5px;
+                border: none;
+            """
+            self.search_bar.setStyleSheet(search_bar_style)
+            self.search_bar.textChanged.connect(self.filter_songs)
+            self.layout().addWidget(self.search_bar)
+        else:
+            self.search_bar.setHidden(not self.search_bar.isHidden())
+
+    def filter_songs(self):
+        search_query = self.search_bar.text().lower()
+        song_list = self.parent().song_list
+        for index in range(song_list.count()):
+            item = song_list.item(index)
+            if search_query in item.text().lower():
+                item.setHidden(False)
+            else:
+                item.setHidden(True)
 
 
 if __name__ == "__main__":
