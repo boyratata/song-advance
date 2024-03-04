@@ -270,7 +270,7 @@ class TitleBar(QtWidgets.QWidget):
             print("Unsupported file format. Only MP3 files are allowed.")
 
     def toggle_search_bar(self):
-        if not hasattr(self, 'search_bar'):  # Check if search bar exists
+        if not hasattr(self, 'search_bar'):
             self.search_bar = QtWidgets.QLineEdit()
             self.search_bar.setPlaceholderText("Search Songs")
             search_bar_style = """
