@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <img src="https://giphy.com/embed/hAVGOMAO75VSPgl3s8%22%20width=%22480%22%20height=%22480%22%20frameBorder=%220%22%20class=%22giphy-embed%22%20allowFullScreen%3E%3C/iframe%3E%3Cp%3E%3Ca%20href=%22https://giphy.com/gifs/TheArtsyHeaux-cute-fun-abundance-hAVGOMAO75VSPgl3s8"><br>
+  <img src="https://user-images.githubusercontent.com/99215486/175369409-b967da5b-e373-48ea-b8f5-8ed3d613df03.gif"><br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=6d00c1">
   <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
   <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=6d00c1">
