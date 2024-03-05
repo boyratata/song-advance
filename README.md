@@ -4,12 +4,12 @@
 
 <div align="center">
   <img src="https://i.imgur.com/KjsANsk.gif"><br>
-  <img src="https://img.shields.io/github/languages/top/YourUsername/YourRepository?color=6d00c1">
-  <img src="https://img.shields.io/github/stars/YourUsername/YourRepository?color=6d00c1&logoColor=6d00c1"><br>
-  <img src="https://img.shields.io/github/commit-activity/w/YourUsername/YourRepository?color=6d00c1">
-  <img src="https://img.shields.io/github/last-commit/YourUsername/YourRepository?color=6d00c1&logoColor=6d00c1"><br>
-  <img src="https://img.shields.io/github/issues/bpyratata/YourRepository?color=6d00c1&logoColor=6d00c1">
-  <img src="https://img.shields.io/github/issues-closed/YourUsername/YourRepository?color=6d00c1&logoColor=6d00c1"><hr style="border-radius: 2%; margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
+  <img src="https://img.shields.io/github/languages/top/boyratata/song?color=6d00c1">
+  <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
+  <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=6d00c1">
+  <img src="https://img.shields.io/github/last-commit/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
+  <img src="https://img.shields.io/github/issues/boyratata/song?color=6d00c1&logoColor=6d00c1">
+  <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=6d00c1&logoColor=6d00c1"><hr style="border-radius: 2%; margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
 </div>
 
 ## Features
