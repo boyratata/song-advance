@@ -10,7 +10,7 @@ The Song Player application is a Python program designed to play a collection of
 - Upload Music: Easily upload music files.
 - Search Bar: Quickly find songs.
 
-- ![gui](https://i.imgur.com/IC8xRfB.gif)
+- ![gui](https://i.imgur.com/KjsANsk.gif)
 
 **📌 How to Use:**
 1. Double-click `startup.bat` to initiate the application.
