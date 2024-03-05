@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <img src="https://i.imgur.com/KjsANsk.gif"><br>
+  <img src="https://github.com/boyratata/gif/blob/main/2024-03-0717-43-33-ezgif.com-optimize.gif"><br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=6d00c1">
   <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
   <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=6d00c1">
