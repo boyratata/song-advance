@@ -49,4 +49,4 @@
 
 ## Contact
 
-- Discord: [Link](https://discord.com/users/962552468292648990)
+- Discord: <a href="https://discord.com/users/962552468292648990" style="color: purple;">Link</a>
