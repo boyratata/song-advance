@@ -6,10 +6,12 @@
   <img src="https://user-images.githubusercontent.com/99215486/175369409-b967da5b-e373-48ea-b8f5-8ed3d613df03.gif">
   <br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=6d00c1">
-  <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
+  <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1">
+  <br>
   <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=6d00c1">
-  <img src="https://img.shields.io/github/license/boyratata/song?style=for-the-badge&color=%236d00c1" style="border-radius: 10px;">
-  <img src="https://img.shields.io/github/last-commit/boyratata/song?color=6d00c1&logoColor=6d00c1"><br>
+  <img src="https://img.shields.io/github/license/boyratata/song?style=for-the-badge&color=%236d00c1">
+  <img src="https://img.shields.io/github/last-commit/boyratata/song?color=6d00c1&logoColor=6d00c1">
+  <br>
   <img src="https://img.shields.io/github/issues/boyratata/song?color=6d00c1&logoColor=6d00c1">
   <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=6d00c1&logoColor=6d00c1">
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
