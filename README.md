@@ -30,7 +30,7 @@
 
 ## How to Use
 
-1. Double-click `startup.bat` to initiate the application.
+1. Double-click <span style="color: purple;">`startup.bat`</span> to initiate the application.
 2. Click `README.bat` for comprehensive information about the application.
 3. Click `builder.bat` to launch `builder.pyw` and start the application.
 4. Wait for the application to initialize and load.
@@ -49,4 +49,4 @@
 
 ## Contact
 
-- Discord: <a href="https://discord.com/users/962552468292648990" style="color: purple;">Link</a>
+- Discord: [Link](https://discord.com/users/962552468292648990)
