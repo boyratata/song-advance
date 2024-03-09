@@ -67,7 +67,7 @@ class SongPlayer(QtWidgets.QWidget):
                 border-radius: 4px;
             }
             QSlider::handle:horizontal {
-                background-color: #FFFFFF;
+                background-color: #B39CD0;
                 width: 10px; /* Width of the handle */
                 margin: -5px 0; /* Centers the handle vertically */
                 border-radius: 5px; /* Makes the handle circular */
@@ -146,6 +146,7 @@ class SongPlayer(QtWidgets.QWidget):
 class TitleBar(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setStyleSheet("background-color: #B39CD0;")
         self.logs = ""
         layout = QtWidgets.QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
@@ -159,7 +160,7 @@ class TitleBar(QtWidgets.QWidget):
         owner_label = QtWidgets.QLabel()
         owner_label.setPixmap(owner_pixmap.scaled(30, 30, aspectRatioMode=QtCore.Qt.KeepAspectRatio,
                                                   transformMode=QtCore.Qt.SmoothTransformation))
-        owner_label.setStyleSheet("background-color: #263238;")
+        owner_label.setStyleSheet("background-color: #FBEAFF;")
         layout.addWidget(owner_label)
 
         self.title_label = QtWidgets.QLabel("Song Player")
