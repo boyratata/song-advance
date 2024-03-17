@@ -23,7 +23,10 @@
   </style>
 
   <div class="pink-background">
-    ## Features
+  </div>
+</div>
+
+## Features
 
 - User Interface: An intuitive interface for selecting and playing songs.
 - Song List: Fetches songs from predefined URLs and populates a list for users.
@@ -56,6 +59,3 @@
 ## Contact
 
 - Discord: [Link](https://discord.com/users/962552468292648990)
-
-  </div>
-</div>
