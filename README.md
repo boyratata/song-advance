@@ -47,4 +47,4 @@
 
 ## Contact
            
-- Discord: $${\color{pink}Link}$$](https//example.com/)
+- Discord: $${\color{pink}Link}$$
