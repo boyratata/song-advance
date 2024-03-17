@@ -1,5 +1,5 @@
 <h1
-   $${\color{pink}🎵 Song Player Application}$$<
+   $${\color{pink}🎵 Song Player Application}$$
 /h1>
   
 <div align="center">
