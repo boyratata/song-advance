@@ -47,4 +47,4 @@
 
 ## Contact
 
-- Discord: $${\color{pink}\text{Link}}$$]{https://discord.com/users/962552468292648990}
+- Discord: $${\color{pink}\text{Link}}$$](https://discord.com/users/962552468292648990)
