@@ -6,14 +6,14 @@
   <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif">
   <br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=pink">
-  <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
+  <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=pink">
   <br>
-  <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=#FFC0CB">
-  <img src="https://img.shields.io/github/license/boyratata/song?color=#FFC0CB">
-  <img src="https://img.shields.io/github/last-commit/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
+  <img src="https://img.shields.io/github/commit-activity/w/boyratata/song?color=pink">
+  <img src="https://img.shields.io/github/license/boyratata/song?color=pink">
+  <img src="https://img.shields.io/github/last-commit/boyratata/song?color=pink&logoColor=pink">
   <br>
-  <img src="https://img.shields.io/github/issues/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
-  <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
+  <img src="https://img.shields.io/github/issues/boyratata/song?color=pink&logoColor=pink">
+  <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=pink&logoColor=pink">
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
 </div>
 
