@@ -46,5 +46,7 @@
 - Make sure necessary libraries are installed (PySide2, pygame, requests).
 
 ## Contact
-
-- Discord: <span style="color: pink;">Link</span>[https://discord.com/users/962552468292648990]
+           
+- Discord: <body>
+  <a href="http://example.com/" style="color:red;">Red Link</a>
+</body>   
