@@ -1,5 +1,11 @@
-<h1 align="center" style="color: pink;">
-  ♫ Song Player Application
+<style>
+  h1 {
+    color: pink !important;
+  }
+</style>
+
+<h1 align="center">
+  🎵 Song Player Application
 </h1>
 
 <div align="center">
