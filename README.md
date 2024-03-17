@@ -15,6 +15,12 @@
   <img src="https://img.shields.io/github/issues/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
   <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
+
+  <style>
+    button {
+      background-color: #FFC0CB;
+    }
+  </style>
 </div>
 
 ## Features
