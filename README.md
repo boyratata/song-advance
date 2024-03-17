@@ -1,6 +1,4 @@
-<body>
-  <p style="color:red;">Red paragraph text</p>
-</body>
+$${\color{orange}Orange}$$
 
 <div align="center">
   <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif">
