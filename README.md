@@ -47,6 +47,4 @@
 
 ## Contact
            
-- Discord: <body>
-  <a href="http://example.com/" style="color:red;">Red Link</a>
-</body>   
+- Discord: <link rel="stylesheet" type="text/css" href="https://github.com/legoman8304/legoman8304.github.io/blob/master/style.css">
