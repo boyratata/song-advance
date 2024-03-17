@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif">
+  <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif" style="filter: grayscale(0%) sepia(100%) hue-rotate(0deg) saturate(1000%) brightness(100%) contrast(100%);">
   <br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=#FFC0CB">
   <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
@@ -15,15 +15,6 @@
   <img src="https://img.shields.io/github/issues/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
   <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
-
-  <style>
-    .pink-background {
-      background-color: #FFC0CB;
-    }
-  </style>
-
-  <div class="pink-background">
-  </div>
 </div>
 
 ## Features
