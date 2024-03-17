@@ -47,4 +47,4 @@
 
 ## Contact
            
-- Discord: <link rel="stylesheet" type="text/css" href="https://github.com/legoman8304/legoman8304.github.io/blob/master/style.css">
+- Discord: $${\color{pink}Link}$$](https//example.com/
