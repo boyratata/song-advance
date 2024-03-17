@@ -1,5 +1,7 @@
-$${\color{pink}pink}$$
-
+<h1
+   $${\color{pink}🎵 Song Player Application}$$<
+/h1>
+  
 <div align="center">
   <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif">
   <br>
