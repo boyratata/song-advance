@@ -44,7 +44,3 @@
 
 - Ensure a stable internet connection for fetching songs.
 - Make sure necessary libraries are installed (PySide2, pygame, requests).
-
-## Contact
-           
-- Discord: [link]}}](<https://discord.com/users/1218777412364406906>)
