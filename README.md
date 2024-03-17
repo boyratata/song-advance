@@ -12,8 +12,8 @@
   <img src="https://img.shields.io/github/license/boyratata/song?color=#FFC0CB">
   <img src="https://img.shields.io/github/last-commit/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
   <br>
-  <img src="https://img.shields.io/github/issues/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
-  <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=6d00c1&logoColor=#FFC0CB">
+  <img src="https://img.shields.io/github/issues/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
+  <img src="https://img.shields.io/github/issues-closed/boyratata/song?color=#FFC0CB&logoColor=#FFC0CB">
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
 </div>
 
