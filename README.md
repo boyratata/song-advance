@@ -3,7 +3,7 @@
 </h1>
 
 <div align="center">
-  <img src="https://theawesomer.com/photos/2015/09/animations_by_kirokaze_2.gif">
+  <img src="https://static.wixstatic.com/media/aeb5ff_672de2a1db884eadbdaf506a436e271a~mv2.gif">
   <br>
   <img src="https://img.shields.io/github/languages/top/boyratata/song?color=6d00c1">
   <img src="https://img.shields.io/github/stars/boyratata/song?color=6d00c1&logoColor=6d00c1">
