@@ -17,7 +17,7 @@
   <hr style="margin-top: 60px; margin-bottom: 60px;" noshade="" size="20" width="100%">
   <style>
     button {
-      background-color: #FFC0CB;
+      background: #FFC0CB;
     }
   </style>
 </div>
