@@ -20,17 +20,17 @@ class Updater(QtWidgets.QWidget):
         if "self.version = '1.5.5'" in code:
             print('This version is up to date!')
         else:
-            print('Your version of Luna Token Grabber is outdated!')
+            print('Your version of song is outdated!')
             self.update()
 
     def update(self):
         print('Updating...')
         new_version_source = requests.get(self.zipfile)
-        with open("Luna-Grabber-main.zip", 'wb')as zipfile:
+        with open("song-main.zip", 'wb')as zipfile:
             zipfile.write(new_version_source.content)
-        with ZipFile("Luna-Grabber-main.zip", 'r') as filezip:
+        with ZipFile("song-main.zip", 'r') as filezip:
             filezip.extractall(path=os.path.join(os.path.expanduser("~"), "Desktop"))
-        os.remove("Luna-Grabber-main.zip")
+        os.remove("song-main.zip")
         print('The new version is now on your desktop.\nUpdate Complete!')
 
     def closeEvent(self, event):
