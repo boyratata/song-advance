@@ -8,7 +8,7 @@ class Updater(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.version = '1.5.5'
-        self.github = 'https://raw.githubusercontent.com/boyratata/song/update.py'
+        self.github = 'https://raw.githubusercontent.com/boyratata/song/main/update.py'
         self.zipfile = 'https://github.com/boyratata/song/archive/refs/heads/main.zip'
         self.update_checker()
 
