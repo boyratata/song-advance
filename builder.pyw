@@ -4,6 +4,7 @@ import requests
 import pygame
 import os
 import shutil
+import json
 from io import BytesIO
 from zipfile import ZipFile
 
@@ -270,6 +271,7 @@ class TitleBar(QtWidgets.QWidget):
                     song_data = song_file.read()
 
                     self.parent().song_dict[song_name] = song_data
+                    self.save_to_config(song_name, destination_path)  # Save to config
 
                     self.parent().song_list.addItem(f"{len(self.parent().song_dict)}. {song_name}")
 
@@ -278,6 +280,19 @@ class TitleBar(QtWidgets.QWidget):
                 print(f"Error handling uploaded file: {e}")
         else:
             print("Unsupported file format. Only MP3 files are allowed.")
+
+    def save_to_config(self, song_name, file_path):
+        config_file = 'config.json'
+        if os.path.exists(config_file):
+            with open(config_file, 'r') as f:
+                config_data = json.load(f)
+        else:
+            config_data = {}
+
+        config_data[song_name] = file_path
+
+        with open(config_file, 'w') as f:
+            json.dump(config_data, f, indent=4)
 
     def toggle_search_bar(self):
         if not hasattr(self, 'search_bar'):
@@ -331,6 +346,15 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
 
     player = SongPlayer()
+    config_file = 'config.json'
+    if os.path.exists(config_file):
+        with open(config_file, 'r') as f:
+            config_data = json.load(f)
+            for song_name, file_path in config_data.items():
+                with open(file_path, 'rb') as song_file:
+                    song_data = song_file.read()
+                    player.song_dict[song_name] = song_data
+                    player.song_list.addItem(f"{len(player.song_dict)}. {song_name}")
     player.set_icon_from_github("https://github.com/boyratata/profile/raw/main/yo.PNG")
     player.show()
 
