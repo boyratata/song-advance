@@ -11,7 +11,7 @@ from zipfile import ZipFile
 class SongPlayer(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Song-advance")
+        self.setWindowTitle("Song-Advance")
         self.setGeometry(100, 100, 800, 500)
         self.current_song_playing = False
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
