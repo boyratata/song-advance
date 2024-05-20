@@ -98,7 +98,8 @@ class SongPlayer(QtWidgets.QWidget):
             "https://github.com/boyratata/song-list/raw/main/u.zip",
             "https://github.com/boyratata/song-list/raw/main/sup.zip",
             "https://github.com/boyratata/song-list/raw/main/yaa.zip",
-            "https://github.com/boyratata/song-list/raw/main/upload.zip"
+            "https://github.com/boyratata/song-list/raw/main/upload.zip",
+            "https://github.com/boyrarata/song-list/raw/main/girl.rar"
         ]
         song_count = 0
         for url in urls:
