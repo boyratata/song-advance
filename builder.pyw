@@ -1,20 +1,36 @@
+from PySide6.QtGui import QPainter, QPainterPath, QBrush, QColor, QRegion 
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton
+from PySide6.QtGui import QPainter, QPainterPath, QBrush, QColor
+from concurrent.futures import ThreadPoolExecutor
 from PySide6 import QtWidgets, QtGui, QtCore
-import sys
+from PySide6.QtCore import QPointF
+from PySide6.QtGui import QColor
+from pypresence import Presence
+from PySide6.QtCore import Qt
+from zipfile import ZipFile
+from io import BytesIO
+import webbrowser
 import requests
 import pygame
-import os
 import shutil
-from io import BytesIO
-from zipfile import ZipFile
+import json
+import time
+import sys
+import os
 
-class SongPlayer(QtWidgets.QWidget):
+class Vance(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Song-Advance")
+        self.setWindowTitle("Vance")
         self.setGeometry(100, 100, 800, 500)
-        self.current_song_playing = False
+        self.playing = False
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.setStyleSheet("background-color: #263238; color: #FFFFFF; font-size: 14px; border-radius: 10px;")
+        self.setStyleSheet("""
+            background-color: #1C1C1C;
+            color: #FFFFFF;
+            font-size: 14px;
+            border-radius: 10px;
+        """)
 
         pygame.init()
         pygame.mixer.init()
@@ -22,52 +38,69 @@ class SongPlayer(QtWidgets.QWidget):
         self.song_dict = {}
         self.current_song = None
 
-        self.init_ui()
-        self.fetch_songs()
+        self.ui()
+        self.song()
+        self.setup_discord_presence()
 
-    def set_icon_from_github(self, url):
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            icon_data = response.content
-            icon_pixmap = QtGui.QPixmap()
-            icon_pixmap.loadFromData(icon_data)
-            self.setWindowIcon(QtGui.QIcon(icon_pixmap))
-        except requests.RequestException as e:
-            print(f"Failed to download icon from GitHub: {e}")
-
-    def init_ui(self):
-        layout = QtWidgets.QVBoxLayout()
+    def ui(self):
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.setContentsMargins(10, 10, 10, 10)
 
         self.title_bar = TitleBar(self)
         layout.addWidget(self.title_bar)
 
         self.song_list = QtWidgets.QListWidget()
-        self.song_list.setStyleSheet("color: #FFFFFF; background-color: #37474F; border-radius: 10px; padding: 10px; border: 2px solid #455A64;")
+        self.song_list.setStyleSheet("""
+            color: #FFFFFF;
+            background-color: #2E2E2E;
+            border-radius: 10px;
+            border: 2px solid #3E3E3E;
+        """)
         self.song_list.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.song_list.itemClicked.connect(self.toggle_play_pause)
+        self.song_list.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.song_list.itemClicked.connect(self.play)
         layout.addWidget(self.song_list)
 
-        self.volume_slider = self.create_volume_slider()
+        self.volume_slider = self.slider()
         layout.addWidget(self.volume_slider)
+        
+        self.update_mask(10)
 
-        self.setLayout(layout)
+    def paintEvent(self, event):
+        painter = QtGui.QPainter(self)
+        painter.setRenderHint(QtGui.QPainter.Antialiasing)
 
-    def create_volume_slider(self):
+        rect = self.rect()
+        painter.fillRect(rect, self.palette().color(QtGui.QPalette.Window))
+
+    def resizeEvent(self, event):
+        radius = 10
+        self.update_mask(radius)
+
+    def update_mask(self, radius):
+        mask_region = self.rounded_mask(self.size(), radius)
+        self.setMask(mask_region)
+
+    def rounded_mask(self, size, radius):
+        path = QtGui.QPainterPath()
+        path.addRoundedRect(QtCore.QRectF(0, 0, size.width(), size.height()), radius, radius)
+        return QtGui.QRegion(path.toFillPolygon().toPolygon())
+        
+    def slider(self):
         slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
         slider.setMinimum(0)
         slider.setMaximum(100)
         slider.setValue(70)
         slider.setToolTip("Volume")
-        slider.valueChanged.connect(self.change_volume)
+        slider.valueChanged.connect(self.volume)
         slider.setStyleSheet("""
             QSlider::groove:horizontal {
-                background-color: #546E7A;
+                background-color: #4E4E4E;
                 height: 8px;
                 border-radius: 4px;
             }
             QSlider::handle:horizontal {
-                background-color: #B39CD0;
+                background-color: #171716;
                 width: 10px;
                 margin: -5px 0;
                 border-radius: 5px;
@@ -75,7 +108,7 @@ class SongPlayer(QtWidgets.QWidget):
         """)
         return slider
 
-    def fetch_songs(self):
+    def song(self):
         urls = [
             "https://github.com/boyratata/song-list/raw/main/ayo.zip",
             "https://github.com/boyratata/song-list/raw/main/hey.zip",
@@ -88,10 +121,13 @@ class SongPlayer(QtWidgets.QWidget):
             "https://github.com/boyratata/song-list/raw/main/upload.zip",
             "https://github.com/boyratata/song-list/raw/main/b.zip"
         ]
-        for url in urls:
-            self.fetch_and_add_songs(url)
 
-    def fetch_and_add_songs(self, url):
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(self.get_song, url) for url in urls]
+            for future in futures:
+                future.result()
+
+    def get_song(self, url):
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -104,107 +140,170 @@ class SongPlayer(QtWidgets.QWidget):
                         self.song_list.addItem(f"{len(self.song_dict)}. {song_name}")
         except Exception as e:
             print(f"Error fetching songs from {url}: {e}")
+            
+    def setup_discord_presence(self):
+        self.client_id = "1260552765160034405"  # Replace with your own client ID
+        self.discord_presence = Presence(client_id=self.client_id)
+        try:
+            self.discord_presence.connect()
+            self.update_presence()
+        except Exception as e:
+            print(f"Error connecting to Discord RPC: {e}")
 
-    def toggle_play_pause(self, item):
+    def update_presence(self):
+        presence_data = {
+            "state": "Listening to music",
+            "details": f"Now playing: {self.current_song}" if self.current_song else "Browsing songs",
+            "large_image": "red"  # Replace with the key of your large image
+        }
+        self.discord_presence.update(**presence_data)
+
+    def closeEvent(self, event):
+        try:
+            self.discord_presence.close()
+        except Exception as e:
+            print(f"Error closing Discord RPC connection: {e}")
+
+    def play(self, item):
         song_name = item.text().split('. ', 1)[-1]
         song_data = self.song_dict.get(song_name)
 
         if song_data:
             if song_name == self.current_song:
-                self.toggle_pause()
+                self.pause()
             else:
-                self.play_new_song(song_name, song_data)
+                self.new(song_name, song_data)
         else:
             print(f"Failed to play song: {item.text()}")
 
-    def toggle_pause(self):
-        if self.current_song_playing:
+    def pause(self):
+        if self.playing:
             pygame.mixer.music.pause()
         else:
             pygame.mixer.music.unpause()
-        self.current_song_playing = not self.current_song_playing
+        self.playing = not self.playing
 
-    def play_new_song(self, song_name, song_data):
-        if self.current_song_playing:
+    def new(self, song_name, song_data):
+        if self.playing:
             pygame.mixer.music.stop()
-        self.current_song_playing = True
+        self.playing = True
         song_data_io = BytesIO(song_data)
         pygame.mixer.music.load(song_data_io)
-        pygame.mixer.music.set_volume(self.volume_slider.value() / 100)
+        
+        # Ensure self.volume_slider is not None before accessing its value
+        if self.volume_slider:
+            pygame.mixer.music.set_volume(self.volume_slider.value() / 100)
+        else:
+            print("Volume slider is not initialized correctly.")
+
         pygame.mixer.music.play(-1)
         self.current_song = song_name
-        QtCore.QTimer.singleShot(100, self.check_song_finished)
+        QtCore.QTimer.singleShot(100, self.check)
 
-    def change_volume(self, value):
+    def volume(self, value):
         pygame.mixer.music.set_volume(value / 100)
 
-    def check_song_finished(self):
+    def check(self):
         if not pygame.mixer.music.get_busy():
             self.current_song = None
 
 class TitleBar(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setStyleSheet("background-color: #B39CD0;")
+        self.setStyleSheet("background-color: #333333;")
         layout = QtWidgets.QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(layout)
 
-        owner_image_url = "https://github.com/boyratata/profile/raw/main/yo.PNG"
-        owner_label = QtWidgets.QLabel()
-        owner_label.setPixmap(self.fetch_pixmap(owner_image_url).scaled(30, 30, QtCore.Qt.AspectRatioMode.KeepAspectRatio, QtCore.Qt.TransformationMode.SmoothTransformation))
-        owner_label.setStyleSheet("background-color: #FBEAFF;")
-        layout.addWidget(owner_label)
-
-        self.title_label = QtWidgets.QLabel("Song Player")
+        self.title_label = QtWidgets.QLabel("Vance")
         self.title_label.setStyleSheet("color: white; font-size: 16px; font-weight: bold;")
         layout.addWidget(self.title_label)
         layout.addStretch()
 
-        self.create_buttons(layout)
+        self.maximized = False  # Add this line to track the window state
+        self.search_bar = None
+        self.maximize_button = None  # Initialize maximize_button attribute
 
-    def fetch_pixmap(self, url):
-        response = requests.get(url)
-        pixmap = QtGui.QPixmap()
-        pixmap.loadFromData(response.content)
-        return pixmap
+        self.buttons(layout)  # Ensure this method initializes maximize_button
 
-    def create_buttons(self, layout):
-        buttons = [
-            ("+", self.upload_mp3, 20, "color: white; font-weight: bold; background-color: #455A64;"),
-            ("🔍", self.toggle_search_bar, 20, "color: white; font-weight: bold; background-color: #455A64;"),
-            ("━", self.minimize_window, 20, "color: white; font-weight: bold; background-color: #455A64;"),
-            ("☐", self.maximize_window, 20, "color: white; font-weight: bold; background-color: #455A64;"),
-            ("X", self.parent().close, 20, "color: white; font-weight: bold; background-color: #455A64;"),
+    def buttons(self, layout):
+        base_url = "https://raw.githubusercontent.com/boyratata/gui/main/"
+        icon_dir = "icons/"
+        os.makedirs(icon_dir, exist_ok=True)
+
+        other_buttons = [
+            ("volume.png", "Volume", 25, self.svolume),
+            ("github.png", "GitHub", 25, self.github),
+            ("save.png", "Save", 25, self.upload),
+            ("search.png", "Search", 25, self.search),
+            ("minus.png", "Minimize", 25, self.minimize),
+            ("maximize.png", "Maximize", 25, self.maximize, "maximize_button"),
+            ("close.png", "Close", 25, self.close_app),
         ]
 
-        for text, func, size, style in buttons:
-            btn = QtWidgets.QPushButton(text)
-            btn.clicked.connect(func)
+        for img_name, tooltip, size, action, *args in other_buttons:
+            img_url = f"{base_url}{img_name}"
+            save_path = os.path.join(icon_dir, img_name)
+            
+            if not os.path.exists(save_path):
+                self.download_icon(img_url, save_path)
+
+            btn = QtWidgets.QPushButton()
+            btn.setIcon(QtGui.QIcon(save_path))
+            btn.setIconSize(QtCore.QSize(size, size))
             btn.setFixedSize(size, size)
-            btn.setStyleSheet(style)
+            btn.clicked.connect(action)
+            btn.setToolTip(tooltip)
+            btn.setStyleSheet("border: none; background-color: #555555;")
+            if args:
+                btn.setObjectName(args[0])
+                if args[0] == "maximize_button":
+                    self.maximize_button = btn  # Assign maximize_button attribute
             layout.addWidget(btn)
 
-    def minimize_window(self):
+    def download_icon(self, url, save_path):
+        try:
+            response = requests.get(url, stream=True)
+            response.raise_for_status()
+            with open(save_path, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
+            print(f"Downloaded {url} successfully.")
+        except requests.exceptions.RequestException as e:
+            print(f"Failed to download {url}: {e}")
+        except Exception as e:
+            print(f"An error occurred while downloading {url}: {e}")
+            
+    def github(self):
+        url = "https://github.com/boyratata"
+        webbrowser.open(url)
+        
+    def minimize(self):
         self.parent().showMinimized()
 
-    def maximize_window(self):
-        if self.parent().isMaximized():
-            self.parent().showNormal()
+    def maximize(self):
+        if self.maximized:
+            self.parent().showNormal()  # Restore normal size
+            self.maximize_button.setIcon(QtGui.QIcon("icons/maximize.png"))  # Change button icon
         else:
-            self.parent().showMaximized()
+            self.parent().showMaximized()  # Maximize the window
+            self.maximize_button.setIcon(QtGui.QIcon("icons/minimize.png"))  # Change button icon
+        self.maximized = not self.maximized 
+      
+    def close_app(self):
+        self.parent().close()
 
-    def upload_mp3(self):
+    def upload(self):
         file_dialog = QtWidgets.QFileDialog(self)
         file_dialog.setNameFilter("Music Files (*.mp3)")
         file_dialog.setViewMode(QtWidgets.QFileDialog.Detail)
-        if file_dialog.exec_():
+        if file_dialog.exec():
             for file_path in file_dialog.selectedFiles():
-                self.handle_uploaded_file(file_path)
+                self.file(file_path)
 
-    def handle_uploaded_file(self, file_path):
+    def file(self, file_path):
         if file_path.endswith('.mp3'):
-            upload_dir = 'uploaded_songs'
+            upload_dir = 'songs'
             os.makedirs(upload_dir, exist_ok=True)
 
             file_name = os.path.basename(file_path)
@@ -224,32 +323,50 @@ class TitleBar(QtWidgets.QWidget):
         else:
             print("Unsupported file format. Only MP3 files are allowed.")
 
-    def toggle_search_bar(self):
-        if not hasattr(self, 'search_bar'):
+    def search(self):
+        if self.search_bar is None:
             self.search_bar = QtWidgets.QLineEdit()
-            self.search_bar.setPlaceholderText("Search Songs")
-            self.search_bar.setStyleSheet("background: #263238; border-radius: 10px; color: white; padding: 5px; border: none;")
-            self.search_bar.textChanged.connect(self.filter_songs)
-            self.layout().addWidget(self.search_bar)
-        else:
-            self.search_bar.setHidden(not self.search_bar.isHidden())
+            self.search_bar.setPlaceholderText("Search for a song...")
+            self.search_bar.setStyleSheet("""
+                background-color: #2E2E2E;
+                color: #FFFFFF;
+                padding: 5px;
+                border: 2px solid #3E3E3E;
+                border-radius: 10px;
+            """)
+            self.search_bar.textChanged.connect(self.filters)
+            self.layout().insertWidget(2, self.search_bar)
 
-    def filter_songs(self):
-        search_query = self.search_bar.text().lower()
-        song_list = self.parent().song_list
-        for index in range(song_list.count()):
-            item = song_list.item(index)
-            item.setHidden(search_query not in item.text().lower())
+        self.search_bar.setVisible(not self.search_bar.isVisible())
+
+    def filters(self):
+        if self.search_bar:
+            search_query = self.search_bar.text().lower()
+            song_list = self.parent().song_list
+            for index in range(song_list.count()):
+                item = song_list.item(index)
+                item.setHidden(search_query not in item.text().lower())
+                
+    def svolume(self):
+        parent = self.parent()
+        if hasattr(parent, 'volume_slider'):
+            volume_slider = parent.volume_slider
+            if volume_slider.isHidden():
+                volume_slider.show()
+            else:
+                volume_slider.hide()
+        else:
+            print("Volume slider not found in parent widget.")
 
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.mouse_pressed = True
-            self.mouse_pos = event.globalPos() - self.parent().pos()
+            self.mouse_pos = event.globalPosition().toPoint() - self.parent().pos()
             event.accept()
 
     def mouseMoveEvent(self, event):
         if self.mouse_pressed:
-            self.parent().move(event.globalPos() - self.mouse_pos)
+            self.parent().move(event.globalPosition().toPoint() - self.mouse_pos)
             event.accept()
 
     def mouseReleaseEvent(self, event):
@@ -259,9 +376,6 @@ class TitleBar(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-
-    player = SongPlayer()
-    player.set_icon_from_github("https://github.com/boyratata/profile/raw/main/yo.PNG")
+    player = Vance()
     player.show()
-
     sys.exit(app.exec())
